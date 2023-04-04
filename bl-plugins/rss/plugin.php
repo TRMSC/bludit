@@ -58,6 +58,7 @@ class pluginRSS extends Plugin {
 			$scheduled=false
 		);
 
+		// Add meta data
 		$xml = '<?xml version="1.0" encoding="UTF-8" ?>';
 		$xml .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
 		$xml .= '<channel>';
@@ -66,6 +67,12 @@ class pluginRSS extends Plugin {
 		$xml .= '<link>'.$this->encodeURL($site->url()).'</link>';
 		$xml .= '<description>'.$site->description().'</description>';
 		$xml .= '<lastBuildDate>'.date(DATE_RSS).'</lastBuildDate>';
+		
+		// Add image
+		if (class_exists('pluginSmart')) {
+			$pluginSmart = new pluginSmart();
+			$xml .= '<image>'.$pluginSmart->getValue('favicon').'</image>';
+		}
 
 		// Get keys of pages
 		foreach ($list as $pageKey) {
