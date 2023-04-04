@@ -79,14 +79,15 @@ class pluginRSS extends Plugin {
 				$xml .= '<link>'.$this->encodeURL($page->permalink()).'</link>';
 
 				// Build preview elements
-				$coverAltTag = '';
+				$coverTag = '';
 				if (class_exists('pluginSmart') && $page->custom('altOG')) {
 					$xml .= '<image>'.$page->custom('altOG').'<url>'.$page->custom('altOG').'</url></image>';
 					$coverTag = $page->custom('coverImageAlt');
 				} else {
 					$xml .= '<image>'.$page->coverImage(true).'</image>';
 				}
-				$xml .= '<description>'. ($page->coverImage(true) ? '<img src="'.$page->coverImage(true).'" alt="'. $coverAltTag . '"></img>' : '') . Sanitize::html($page->contentBreak()).'</description>';
+				$imageTag = $page->coverImage(true) ? '<img src="'.$page->coverImage(true).'" alt="'. $coverTag . '"></img>' : '';
+				$xml .= '<description>'.$imageTag.'<em>'.$page->description().'</em>'.Sanitize::html($page->contentBreak()).'</description>';
 
 				// Build further elements
 				$xml .= '<pubDate>'.date(DATE_RSS,strtotime($page->getValue('dateRaw'))).'</pubDate>';
